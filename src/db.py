@@ -8,19 +8,16 @@ s3 = boto3.client('s3',
                   aws_secret_access_key=config.SECRET_KEY, 
                   region_name=config.REGION_NAME)
 # Connect to PostgreSQL
-conn = psycopg2.connect(
-    host=config.HOST,
-    port=config.PORT,
-    database=config.DATABASE,
-    user=config.USERNAME,
-    password=config.PASSWORD
-)
-cur = conn.cursor()
+# conn = psycopg2.connect(
+#     host=config.HOST,
+#     port=config.PORT,
+#     database=config.DATABASE,
+#     user=config.USERNAME,
+#     password=config.PASSWORD
+# )
+# cur = conn.cursor()
 
 
-def close_connection():
-    cur.close()
-    conn.close()
-
-
-# Close the PostgreSQL connection
+# def close_connection():
+#     cur.close()
+#     conn.close()
