@@ -1,6 +1,5 @@
 from transformers import AutoFeatureExtractor, AutoModelForImageClassification
 import torch
-from PIL import Image
 
 extractor = AutoFeatureExtractor.from_pretrained("harish03/catbreed")
 model = AutoModelForImageClassification.from_pretrained("harish03/catbreed")

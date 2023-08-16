@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-
+print(os.path)
 load_dotenv()
 
 ACCESS_KEY = os.getenv('ACCESS_KEY_ID')
@@ -12,4 +12,3 @@ PASSWORD = os.getenv('PGSQL_PASSWORD')
 USERNAME = os.getenv('PGSQL_USERNAME')
 BUCKET = os.getenv('BUCKET')
 REGION_NAME = 'eu-central-1'
-# ENCRYPTION_KEY = 
