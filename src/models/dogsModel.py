@@ -1,8 +1,8 @@
 import torchvision.models as models
 import torchvision.transforms as transforms
 import torch
-from PIL import Image
 import json
+from constants.dogs import max_euclidean_distance
 
 model_transfer = models.resnet50(pretrained=True)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -39,7 +39,7 @@ def predict(img):
 def compare_dogs(img1, img2):
     output1, output2 = predict(img1), predict(img2)
     euclidean_distance = torch.norm(output1 - output2, p=2)
-    normalized_distance = euclidean_distance / 100
+    normalized_distance = euclidean_distance / max_euclidean_distance
     percentage_similarity = 100 * (1 - normalized_distance)
     return percentage_similarity
 

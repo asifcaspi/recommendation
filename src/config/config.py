@@ -1,6 +1,5 @@
 import os
 from dotenv import load_dotenv
-print(os.path)
 load_dotenv()
 
 ACCESS_KEY = os.getenv('ACCESS_KEY_ID')

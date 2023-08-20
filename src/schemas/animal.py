@@ -19,4 +19,4 @@ class Animal(Base):
 
     takenById = Column(String, ForeignKey('user.id'))
     taken_by = relationship("User", foreign_keys=[takenById], lazy='joined')
-    images = relationship('AnimalImages', back_populates='animal')
+    images = relationship('AnimalImages', back_populates='animal', lazy='joined')

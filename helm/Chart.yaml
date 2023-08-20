@@ -1,0 +1,4 @@
+apiVersion: v2
+name: paws-recommendation
+description: A Helm chart for deploying your Python script
+version: 0.1.0

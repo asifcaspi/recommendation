@@ -1,0 +1,1 @@
+min_sentences_similarity = 80

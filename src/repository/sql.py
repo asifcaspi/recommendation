@@ -7,6 +7,17 @@ from schemas.animal import Animal
 from schemas.recommendation import Recommendation
 from schemas.animal_images import AnimalImages
 
+def get_image_from_animal_image(animal_image):
+    return animal_image.image
+
+def set_only_images(animal):
+    animal.string_images = list(map(get_image_from_animal_image, animal.images))
+    return animal
+
+def set_images_empty(animal):
+    animal.string_images = []
+    return animal
+
 
 def get_all_unadoppted_animals():
     Session = sessionmaker(bind=sql_engine)
@@ -25,7 +36,7 @@ def get_all_unadoppted_animals():
             .all()
         )
 
-        return unadopted_animals + animals_without_images
+        return list(map(set_only_images, unadopted_animals)) + list(map(set_images_empty, animals_without_images))
 
     except NoResultFound:
         return []
@@ -55,28 +66,13 @@ def insert_recommendations(recommendations_data):
     session = Session()
     try:
         for data in recommendations_data:
-            # Extract data for each recommendation
-            post_id = data['post_id']
-            user_id = data['user_id']
-            reason = data['reason']
-            confidence = data['confidence']
-
-            # Create Recommendation instance
-            recommendation = Recommendation(
-                post_id=post_id,
-                user_id=user_id,
-                reason=reason,
-                confidence=confidence
-            )
-
             # Add to session and commit
-            session.add(recommendation)
+            session.add(data)
         session.commit()
         print("Recommendations inserted successfully!")
 
     except Exception as e:
         session.rollback()
-        print("Error:", e)
 
     finally:
         session.close()

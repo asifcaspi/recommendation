@@ -19,7 +19,7 @@ model = AutoModel.from_pretrained('sentence-transformers/paraphrase-multilingual
 
 
 
-def compare_sentences(sentences): # unknown just should try and test
+def compare_sentences(sentences):
     # Tokenize sentences
     encoded_input = tokenizer(sentences, padding=True, truncation=True, return_tensors='pt')
 
@@ -32,7 +32,6 @@ def compare_sentences(sentences): # unknown just should try and test
     # Calculate cosine similarity between sentence embeddings
     cosine_similarities = cosine_similarity(sentence_embeddings)
 
-    # Print the cosine similarity matrix
     average_cosine_similarity = np.mean(cosine_similarities)
     return average_cosine_similarity * 100
 

@@ -1,0 +1,5 @@
+# Customize your values here
+replicaCount: 1
+image:
+  repository: https://hub.docker.com//paws-recommendation
+  tag: latest
