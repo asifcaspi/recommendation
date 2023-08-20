@@ -14,8 +14,9 @@ class Animal(Base):
     age = Column(Integer)
 
     # Adding relationships to User model
-    uploadedById = Column(String, ForeignKey('users.id'))
-    uploaded_by = relationship("User", foreign_keys=[uploadedById])
+    uploadedById = Column(String, ForeignKey('user.id'))
+    uploaded_by = relationship("User", foreign_keys=[uploadedById], lazy='joined')
 
-    takenById = Column(String, ForeignKey('users.id'))
-    taken_by = relationship("User", foreign_keys=[takenById])
+    takenById = Column(String, ForeignKey('user.id'))
+    taken_by = relationship("User", foreign_keys=[takenById], lazy='joined')
+    images = relationship('AnimalImages', back_populates='animal')

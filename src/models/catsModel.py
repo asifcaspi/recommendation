@@ -15,6 +15,9 @@ def predict(image):
     # You can now use these features for whatever downstream tasks you have in mind
     return features.last_hidden_state
 
-def compare(features1, features2): # mse i think should be lower then 0.05
+def compare_cats(img1, img2):
+    features1, features2 = predict(img1), predict(img2)
     mse = torch.mean(torch.square(features1 - features2))
-    print("Mean Squared Error between features:", mse.item())
+    r_squared = 1 - mse / 0.5
+    percentage_similarity = r_squared * 100
+    return percentage_similarity

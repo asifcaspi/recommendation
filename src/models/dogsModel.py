@@ -29,14 +29,17 @@ def load_input_image(image):
     image = prediction_transform(image).unsqueeze(0)
     return image
 
-def predict_breed_transfer(img):
+def predict(img):
     # load the image and return the predicted breed
     img = load_input_image(img)
     model_transfer1 = model_transfer.cpu()
     model_transfer1.eval()
     return model_transfer1(img)
     
-def compare1(output1, output2): # i think should be under 20
+def compare_dogs(img1, img2):
+    output1, output2 = predict(img1), predict(img2)
     euclidean_distance = torch.norm(output1 - output2, p=2)
-    print("Euclidean Distance:", euclidean_distance.item())
+    normalized_distance = euclidean_distance / 100
+    percentage_similarity = 100 * (1 - normalized_distance)
+    return percentage_similarity
 

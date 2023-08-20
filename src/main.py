@@ -1,33 +1,31 @@
-from utils.cron_decorator import scheduled_task
 from config.db import s3
-from models.catsModel import predict, compare
-from models.dogsModel import predict_breed_transfer, compare1
+from models.catsModel import compare_cats
+from models.dogsModel import compare_dogs
+from models.sentenceModel import compare_sentences
 from repository.sql import get_all_unadoppted_animals, get_all_users_likes
-import schedule
-import time
+from repository.s3 import get_image_by_key
+import pycron
 
-@scheduled_task(cron_expression="* * * * *")
-def main():
-    print('workssss')
-    print('sdfdsfdsfsd' + get_all_users_likes())
+# @pycron.cron("* * * * *")
+def main(timestamp):
+    user_likes = get_all_users_likes()
+    animals = get_all_unadoppted_animals()
+    print(len(animals))
+    for user_like in user_likes:
+        for animal in animals:
+            if animal.id != user_like.animal.id:
+                description_similarity = compare_sentences([user_like.animal.description, animal.description])
 
+
+main(1)
 # Run the scheduler continuously
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+# if __name__ == '__main__':
+#     pycron.start()
 
-# image_object1 = s3.get_object(Bucket=config.BUCKET, Key='2.jpg')["Body"].read()
-# image1 = Image.open(io.BytesIO(image_object1))
-# image_object2 = s3.get_object(Bucket=config.BUCKET, Key='3.jpg')["Body"].read()
-# image2 = Image.open(io.BytesIO(image_object2))
 # cats stuff
-# compare(predict(image1), predict(image2))
+# print(compare_cats(get_image_by_key('1.jpg'), get_image_by_key('3.jpg'))) above 90
 # dogs staff
-# image_object1 = s3.get_object(Bucket=config.BUCKET, Key='bla1.jpg')["Body"].read()
-# image1 = Image.open(io.BytesIO(image_object1))
-# image_object2 = s3.get_object(Bucket=config.BUCKET, Key='bla2.jpg')["Body"].read()
-# image2 = Image.open(io.BytesIO(image_object2))
-# compare1(predict_breed_transfer(image1), predict_breed_transfer(image2))
+# print(compare_dogs(get_image_by_key('4.jpg'), get_image_by_key('5.jpg'))) above 80
 
 
 

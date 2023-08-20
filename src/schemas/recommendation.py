@@ -7,8 +7,8 @@ class Recommendation(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     animal_id = Column(String, ForeignKey('animals.id'))
-    animal = relationship("Animal", foreign_keys=[animal_id])
+    animal = relationship("Animal", foreign_keys=[animal_id], lazy='joined')
     reason = Column(String)
     confidence = Column(Float)
-    user_id = Column(String, ForeignKey('users.id'))
-    user = relationship("User", foreign_keys=[user_id])
+    user_id = Column(String, ForeignKey('user.id'))
+    user = relationship("User", foreign_keys=[user_id], lazy='joined')
